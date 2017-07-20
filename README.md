@@ -14,8 +14,13 @@ util-string
 ______________
 
 ```c
+  // functions to get/set big-endian integer values
   inline void u16_to_byte( uint8_t * dst, uint16_t u16);
   inline void byte_to_u16( uint16_t * dst, uint8_t * src );
+  inline void u24_to_byte( uint8_t * dst, uint32_t u24)
+  inline void byte_to_u24( uint32_t * dst, uint8_t * src )
+  inline void s24_to_byte( int8_t * dst, int32_t s24 )
+  inline void byte_to_s24( int32_t * dst, uint8_t * src )
   inline void u32_to_byte( uint8_t * dst, uint32_t u32);
   inline void byte_to_u32( uint32_t * dst, uint8_t * src );
 

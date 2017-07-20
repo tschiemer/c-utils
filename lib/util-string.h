@@ -29,6 +29,35 @@ inline void byte_to_u16( uint16_t * dst, uint8_t * src )
 	*dst = (((uint16_t)src[0]) << 8) | (uint16_t)src[1];
 }
 
+inline void u24_to_byte( uint8_t * dst, uint32_t u24)
+{
+	dst[0] = (u24 >> 16) & 0xFF;
+	dst[1] = (u24 >> 8) & 0xFF;
+	dst[2] = u24 & 0xFF;
+}
+
+inline void byte_to_u24( uint32_t * dst, uint8_t * src )
+{
+	*dst = (((uint32_t)src[0]) << 16) | (((uint32_t)src[1]) << 8) | (uint32_t)src[2];
+}
+
+inline void s24_to_byte( int8_t * dst, int32_t s24 )
+{
+	dst[0] = (s24 >> 16) & 0xFF;
+	dst[1] = (s24 >> 8) & 0xFF;
+	dst[2] = s24 & 0xFF;
+}
+
+inline void byte_to_s24( int32_t * dst, uint8_t * src )
+{
+	*dst = (((int32_t)src[0]) << 16) | (((int32_t)src[1]) << 8) | (uint32_t)src[2];
+	//if topmost bit set -> negative
+	if (src[0] & 0x80 == 0x80)
+	{
+		*dst |= 0xFF000000;
+	}
+}
+
 inline void u32_to_byte( uint8_t * dst, uint32_t u32)
 {
 	dst[0] = (u32 >> 24) & 0xFF;
