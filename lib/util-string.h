@@ -52,7 +52,7 @@ inline void bigendian_to_s24( int32_t * dst, uint8_t * src )
 {
 	*dst = (((int32_t)src[0]) << 16) | (((int32_t)src[1]) << 8) | (uint32_t)src[2];
 	//if topmost bit set -> negative
-	if (src[0] & 0x80 == 0x80)
+	if ( (src[0] & 0x80) == 0x80)
 	{
 		*dst |= 0xFF000000;
 	}
