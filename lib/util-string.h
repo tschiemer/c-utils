@@ -24,6 +24,12 @@ inline void u16_to_bigendian( uint8_t * dst, uint16_t u16)
 	dst[1] = u16 & 0xFF;
 }
 
+inline void s16_to_bigendian( uint8_t * dst, int16_t s16 )
+{
+	dst[0] = (s16 >> 8) & 0xFF;
+	dst[1] = s16 & 0xFF;
+}
+
 inline void bigendian_to_u16( uint16_t * dst, uint8_t * src )
 {
 	*dst = (((uint16_t)src[0]) << 8) | (uint16_t)src[1];
