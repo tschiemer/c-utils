@@ -10,6 +10,34 @@
 static uint8_t baseUpper[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 static uint8_t baseLower[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
+bool is_valid_hexchar( uint8_t hex )
+{
+    return (IS_HEX_INT(hex) || IS_HEX_UPPER(hex) || IS_HEX_LOWER(hex));
+}
+
+bool is_valid_hex( uint8_t * hex, uint8_t byteLen )
+{
+    for (uint8_t b = 0, hexLen = 2*byteLen; b < hexLen; b++)
+    {
+        if ( !IS_HEX_INT(hex[b]) && !IS_HEX_UPPER(hex[b]) && !IS_HEX_LOWER(hex[b]) )
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+uint8_t halfbyte_to_hexchar( uint8_t halfbyte )
+{
+    return baseUpper[halfbyte & 0x0f];
+}
+
+uint8_t halfbyte_to_hexchar_lowercase( uint8_t halfbyte )
+{
+    return baseLower[halfbyte & 0x0f];
+}
+
 static void byte_to_hex_( uint8_t * hex, uint8_t * byte, uint8_t len, bool useUppercase )
 {
   uint8_t * base = useUppercase ? baseUpper : baseLower;
@@ -30,16 +58,13 @@ void byte_to_hex_lowercase( uint8_t * hex, uint8_t * byte, uint8_t len )
 	byte_to_hex_( hex, byte, len, false );
 }
 
-bool is_valid_hex( uint8_t * hex, uint8_t byteLen )
+
+uint8_t hexchar_to_halfbyte( uint8_t hexchar )
 {
-  for (uint8_t b = 0, hexLen = 2*byteLen; b < hexLen; b++)
-  {
-    if ( !IS_HEX_INT(hex[b]) && !IS_HEX_UPPER(hex[b]) && !IS_HEX_LOWER(hex[b]) )
-    {
-      return false;
-    }
-  }
-  return true;
+    if (IS_HEX_INT(hexchar)) return hexchar - '0';
+    if (IS_HEX_UPPER(hexchar)) return hexchar - 'A' + 10;
+    if (IS_HEX_LOWER(hexchar)) return hexchar - 'a' + 10;
+    return 0;
 }
 
 bool hex_to_byte( uint8_t * byte, uint8_t * hex, uint8_t byteLen )
