@@ -107,10 +107,13 @@ inline void bigendian_to_s32( int32_t * dst, uint8_t * src)
 
 inline void float_to_bigendian( uint8_t * dst, float f )
 {
-#if __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__
-	memcpy( dst, &f, sizeof(float) );
-#else
 	uint8_t * b = (uint8_t*)&f;
+#if __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__
+	dst[0] = b[0];
+	dst[1] = b[1];
+	dst[2] = b[2];
+	dst[3] = b[3];
+#else
 	dst[0] = b[3];
 	dst[1] = b[2];
 	dst[2] = b[1];
@@ -120,10 +123,13 @@ inline void float_to_bigendian( uint8_t * dst, float f )
 
 inline void bigendian_to_float( float * f, uint8_t * src )
 {
-#if __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__
-	memcpy( f, src, sizeof(float) );
-#else
 	uint8_t * b = (uint8_t*)&f;
+#if __FLOAT_WORD_ORDER__ == __ORDER_BIG_ENDIAN__
+	b[0] = src[0];
+	b[1] = src[1];
+	b[2] = src[2];
+	b[3] = src[3];
+#else
 	b[0] = src[3];
 	b[1] = src[2];
 	b[2] = src[1];
